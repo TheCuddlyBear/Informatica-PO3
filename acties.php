@@ -2,11 +2,6 @@
 <html>
   <head>
     <title>DeDemiFanShop.nl | Home</title>
-    <!-- php variables & query -->
-    <?php 
-    include("config.php") 
-    ?> 
-
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
@@ -73,73 +68,23 @@
           </li>
         </ul>
           <form class="form-inline my-2 my-lg-0">
-          <?php 
-
-            if(empty($_SESSION['klantemail'])){
-              echo '<a href="login.php" class="btn btn-primary">&#128722;</a>';
-            }else{
-              echo '<a href="winkelmand.php" class="btn btn-primary">&#128722;</a>';
-            }
-            ?>
+            <a href="winkelmand.php" class="btn btn-primary">&#128722;</a>;
           </form>
       </div>
     </nav>
 
-<div class="card" style="margin:10px;width:500px;float:center;">
-  <div class="card-body">
-    <h1 style="margin:10px;text-align:center">Track uw bestelling!</h1>
-
-    <!-- Geef order nummer -->
-    <form action="trackentrace.php" method="get">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Ordernummer</label>
-        <input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Voer je ordernummer in"><br>
-      <button type="submit" class="btn btn-primary">Bekijk order status</button>
-      </div>
-    </form>
-  </div>
+<br>
+<div style="border:hidden; border-radius: 5px; width:65%; margin-top:10px; margin-left: 10px; background-color:#f5f5f5">
+<h4 style="text-align:right">0% Korting op alle Samsung hoesjes!</h4>
+<p style="text-align:right">Ook Pasen laten wij niet achterwege. Komende week, op alle <br>Samsung hoesjes 0% korting! Grijp deze kans en bestel nu!</p>
 </div>
 
-<!-- header -->
-
-
-
-
-<!-- Progress Bar -->
-<?php
-    $id = $_GET['id'];
-
-    if(!empty($id)){
-    $sql = "SELECT * FROM trackentrace WHERE order_id = " . $id;  
-    
-    $result = $conn->query($sql);
-
-while ($row = $result->fetch_assoc()){
-
-echo '<div class="progress" style="height: 50px;float: center;">';
-if ($row['status'] == 1){
-  echo '<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><h4>De bestelling is binnen</h4></div>';
-}else if($row['status'] == 2){
-  echo '<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><h4>De bestelling word binnenkort verzonden</h4></div>';
-}else if($row['status'] == 3){
-  echo '<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><h4>De bezorger is onderweg</h4></div>';
-}else {
-  echo '<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><h4>De bestelling is bezorgt</h4></div>';
-}
-echo '</div>';
-}
-}
-?>
-
-    <!-- Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+    <!-- Belangrijke scripten! Niet weghalen!!!!!!! -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
 </html>

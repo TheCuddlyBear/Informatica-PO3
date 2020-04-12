@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>DeDemiFanShop.nl | Home</title>
@@ -5,7 +6,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 <body>
 
@@ -104,25 +105,24 @@ if(!empty($cat) && empty($merk)){
     $sql = "SELECT * FROM product WHERE telefoonmerk = 'merk' AND categorie_naam = '$cat'";
 }
 
-$query = $pdo->prepare($sql);
-$query->execute();
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$result = $conn->query($sql);
 
 echo '<div class="container-fluid">';
 echo '<div class="row" style="margin: 0;">';
 
-foreach($result as &$data){
-    $naamproduct = substr($data['product_naam'],0,23);
-    $descriptie = substr($data['description'],0,71) . '...';
+while($row = $result->fetch_assoc()){
+    $naamproduct = substr($row['product_naam'],0,23);
+    $descriptie = substr($row['description'],0,71) . '...';
 
     echo '<div class="col" style="margin: 10px;">';
-    echo '<div class="card" style="width: 20rem; height: 500px;">';
-    echo '<img src="' . $data['image'] . '" class="card-img-top" style="height: 300px;">';
+    echo '<div class="card animated fadeIn" style="width: 20rem; height: 500px;">';
+    echo '<img src="' . $row['image'] . '" class="card-img-top" style="height: 300px;">';
     echo '<div class="card-body">';
     echo '<h5 class="card-title">' . $naamproduct . '</h5>';
     echo '<p class="card-text">' . $descriptie . '</p>';
-    echo '<a href="addProduct.php?id=' . $data['id'] . '" class="btn btn-primary">Bestel</a>';
-    echo '<p style="float: right;color: gray;">' . '&#8364;' . $data['prijs'] . "</p>";
+    echo '<a href="addProduct.php?id=' . $row['id'] . '" class="btn btn-primary">Bestel</a>';
+    echo '<p style="float: right;color: gray;">' . '&#8364;' . $row['prijs'] . "</p>";
     echo '</div></div></div>';
 }
 
