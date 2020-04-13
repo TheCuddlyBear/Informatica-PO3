@@ -69,6 +69,12 @@
                 </div>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="producten.php">
+                    <svg class="bi bi-list" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
+                    </svg> Alle producten</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="acties.php"><svg class="bi bi-tag-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M2 1a1 1 0 00-1 1v4.586a1 1 0 00.293.707l7 7a1 1 0 001.414 0l4.586-4.586a1 1 0 000-1.414l-7-7A1 1 0 006.586 1H2zm4 3.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" clip-rule="evenodd"/>
                     </svg> Acties</a>
@@ -86,7 +92,7 @@
         </ul>
 
         <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">&#128722;</button>
+            <a href="winkelmand.php" class="btn btn-primary">&#128722;</a>
         </form>
     </div>
 </nav>
@@ -101,28 +107,29 @@ if(!empty($cat) && empty($merk)){
     $sql = "SELECT * FROM product WHERE categorie_naam = '$cat'";
 }elseif(empty($cat) && !empty($merk)){
     $sql = "SELECT * FROM product WHERE telefoonmerk = '$merk'";
-}else{
+}else if(!empty($cat) && !empty($merk)){
     $sql = "SELECT * FROM product WHERE telefoonmerk = 'merk' AND categorie_naam = '$cat'";
+}else{
+    $sql = "SELECT * FROM product";
 }
 
 
 $result = $conn->query($sql);
 
 echo '<div class="container-fluid">';
-echo '<div class="row" style="margin: 0;">';
+echo '<div class="row">';
 
 while($row = $result->fetch_assoc()){
     $naamproduct = substr($row['product_naam'],0,23);
     $descriptie = substr($row['description'],0,71) . '...';
 
-    echo '<div class="col" style="margin: 10px;">';
+    echo '<div class="col-mx-2 px-2">';
     echo '<div class="card animated fadeIn" style="width: 20rem; height: 500px;">';
     echo '<img src="' . $row['image'] . '" class="card-img-top" style="height: 300px;">';
-    echo '<div class="card-body">';
-    echo '<h5 class="card-title">' . $naamproduct . '</h5>';
+    echo '<div class="card-body d-flex flex-column">';
+    echo '<h5 class="card-title">' . $naamproduct . ' - &#8364;' . $row['prijs'] . '</h5>';
     echo '<p class="card-text">' . $descriptie . '</p>';
-    echo '<a href="addProduct.php?id=' . $row['id'] . '" class="btn btn-primary">Bestel</a>';
-    echo '<p style="float: right;color: gray;">' . '&#8364;' . $row['prijs'] . "</p>";
+    echo '<a href="addProduct.php?id=' . $row['id'] . '&prijs=' . $row['prijs'] . '" class="mt-auto btn btn-primary">Bestel</a>';
     echo '</div></div></div>';
 }
 

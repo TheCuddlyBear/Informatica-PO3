@@ -1,5 +1,6 @@
 <?php
 include("../config.php");
+date_default_timezone_set('Europe/Amsterdam');
 
 // Completed orders stats & completed orders voor grafiek
 $totalOrdersQuery = "SELECT * FROM trackentrace";
@@ -25,4 +26,25 @@ $otwOrderQuery = "SELECT * FROM trackentrace WHERE status = 3";
 $resultOTW = mysqli_query($conn, $otwOrderQuery);
 $otwOrders = mysqli_num_rows($resultOTW);
 
+// Earnings monthly
+$monthToday = date('m');
+
+$monthQuery = "SELECT * FROM bestelling WHERE datum LIKE '%$monthToday%'";
+$resultMonth = mysqli_query($conn, $monthQuery);
+$earnings = 0;
+
+while($row = $resultMonth->fetch_assoc()){
+    $earnings = $earnings + $row['totalprice'];
+}
+
+// Earnings yearly
+$yearToday = date('Y');
+
+$yearQuery = "SELECT * FROM bestelling WHERE datum LIKE '%$yearToday%'";
+$resultYear = mysqli_query($conn, $yearQuery);
+$yearEarnings = 0;
+
+while($row = $resultYear->fetch_assoc()){
+    $yearEarnings = $yearEarnings + $row['totalprice'];
+}
 ?>

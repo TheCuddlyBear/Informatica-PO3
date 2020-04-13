@@ -20,6 +20,9 @@ if(!empty($_SESSION['loggedin'])){
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    unset($passwordError);
+    unset($usernameError);
+
     if(!empty($formPassword) && !empty($formUsername)){
       // Put login code here
       $query = "SELECT * FROM users WHERE username = '" . $formUsername . "'";
@@ -39,15 +42,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $_SESSION['avatar'] = $avatar;
           header("location: index.php");
         }else{
-          echo "Username or password is wrong";
+          $passwordError = "Password is invalid";
         }
       }else{
-        echo "That user does not exit";
-        echo $rowcount;
+        $usernameError = "That user does not exist!";
       }
 
-    }else {
-      echo "Username or Password cannot be empty";
+    }else if(empty($formUsername)){
+        $usernameError = "Password cannot be empty";
+    }else if(empty($formPassword)){
+        $passwordError = "Password cannot be empty";
+    }else{
+        $usernameError = "Password cannot be empty";
+        $passwordError = "Password cannot be empty";
     }
 }
 
@@ -70,8 +77,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <h4 class="text-dark mb-4">DeDemiFanShop.nl - Admin Area</h4>
                                     </div>
                                     <form class="user" action="" method="post">
-                                        <div class="form-group"><input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..." name="username"></div>
-                                        <div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
+                                        <?php
+
+                                        if(empty($usernameError)){
+                                            echo '<div class="form-group"><input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..." name="username"></div>';
+                                        }else{
+                                            echo '<div class="form-group"><input class="form-control form-control-user is-invalid" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..." name="username"></div>';
+                                            echo '<div class="invalid-feedback">' . $usernameError . '</div>';
+                                        }
+
+                                        if(empty($passwordError)){
+                                            echo '<div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>';
+                                        }else{
+                                            echo '<div class="form-group"><input class="form-control form-control-user is-invalid" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>';
+                                            echo '<div class="invalid-feedback">' . $passwordError . '</div>';
+                                        }
+
+
+                                        ?>
 										<button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
                                     </form>
                                 </div>

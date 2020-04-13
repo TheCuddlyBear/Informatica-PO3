@@ -2,8 +2,15 @@
 <html>
 <head>
     <title>DeDemiFanShop.nl | Home</title>
+    <?php require("config.php");
+    session_start();
+
+    $orderid = $_GET['id'];
+
+    ?> <!-- Include the Config file -->
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 <body>
 
@@ -53,12 +60,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="producten.php">
-                        <svg class="bi bi-list" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
-                        </svg> Alle producten</a>
+                    <svg class="bi bi-list" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
+                    </svg> Alle producten</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="acties.php"><svg class="bi bi-tag-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <a class="nav-link" href="acties.php"><svg class="bi bi-tag-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M2 1a1 1 0 00-1 1v4.586a1 1 0 00.293.707l7 7a1 1 0 001.414 0l4.586-4.586a1 1 0 000-1.414l-7-7A1 1 0 006.586 1H2zm4 3.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" clip-rule="evenodd"/>
                     </svg> Acties</a>
             </li>
@@ -78,21 +85,41 @@
         </form>
     </div>
 </nav>
+<div class="jumbotron">
+    <h1 class="display-4">Bedankt voor het bestellen!</h1>
+    <p class="lead">Jouw order id = #<?php echo $orderid; ?></p>
+    <hr class="my-4">
+    <p>Je kunt jouw order volgen door naar Track en Trace te gaan en dan het order nummer in te voeren</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href=<?php echo '"trackentrace.php?id=' . $orderid . '"'; ?> role="button">Track jouw order</a>
+    </p>
+</div>
+<div style="margin: 10px;">
 
-<br>
-<div style="border:hidden; border-radius: 5px; width:65%; margin-top:10px; margin-left: 10px; background-color:#f5f5f5">
-    <h4 style="text-align:right">0% Korting op alle Samsung hoesjes!</h4>
-    <p style="text-align:right">Vanwege Pasen, nu 0% Korting op alle Samsung hoesjes<br>Een actie die je niet wilt missen, bestel vandaag nog!</p>
-    <img src="https://www.ledsupport.nl/wp-content/uploads/2016/01/Samsung-logo-2015-Nobg.png" width="400" height="200" style="position:absolute; top:23px;">
-    <a class="btn btn-primary" href="producten.php?phoneBrand=Samsung">Bekijk aanbiedeningen</a>
+    <!-- Database error -->
+    <div id="errormessage" style="float: right;">
+        <?php
+        if(!empty($error)){
+            echo "<div class='alert alert-danger' style='margin:10px' role='alert'>";
+            echo "Connection failed: " . $error;
+            echo "</div";
+        }else if(!empty($_GET['success'])){
+            echo "<div class='alert alert-succes' style='margin:10px' role='alert'>";
+            echo "Het product is aan uw bestelling toegevoegd";
+            echo "</div";
+        }
+        ?>
+    </div>
 </div>
 
-<!-- Belangrijke scripten! Niet weghalen!!!!!!! -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-<script src="assets/js/bs-init.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-<script src="assets/js/theme.js"></script>
+
+
+
+
+
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

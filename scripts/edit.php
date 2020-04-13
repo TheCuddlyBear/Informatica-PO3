@@ -20,20 +20,22 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $productnaam = $_POST['product_naam'];
+        $productnaam = htmlentities($_POST['product_naam'], ENT_QUOTES);
         $productprijs = $_POST['product_prijs'];
         $productid = $_POST['product_id'];
         $productcategorie = $_POST['product_cat'];
-        $productdesc = $_POST['description'];
+        $productdesc = htmlentities($_POST['description'], ENT_QUOTES);
+        $productimage = $_POST['product_image'];
+        $productmerk = $_POST['product_merk'];
 
 
-        $query = "UPDATE product SET product_naam = '$productnaam', description = '$productdesc', prijs = '$productprijs', categorie_naam = '$productcategorie' WHERE id = $productid;";
+        $query = "UPDATE product SET product_naam = '$productnaam', description = '$productdesc', image = '$productimage', prijs = '$productprijs', categorie_naam = '$productcategorie', telefoonmerk = '$productmerk' WHERE id = $productid;";
         $resultaat = mysqli_query($conn, $query);
 
         if($resultaat) {
-            header("location: ../admin/products.php");
+            header("location: ../admin/products.php?alert=editSuccess");
         }else{
-            echo 'Error: ' . mysqli_error($resultaat);
+            header("location: ../admin/products.php?alert=editFailed");
         }
 
     }else{
@@ -61,6 +63,7 @@
                 <li class="nav-item" role="presentation"><a class="nav-link" href="../admin/index.php"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="../admin/profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link active" href="../admin/products.php"><i class="fas fa-table"></i><span>Products</span></a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="orders.php"><i class="fas fa-table"></i><span>Orders</span></a></li>
             </ul>
             <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
         </div>
@@ -105,8 +108,11 @@
                     <div class="card-body">
                         <form action="" method="post">
                             <div class="form-row">
-                                <div class="col">
+                                <div class="col-1">
                                     <div class="form-group"><label for="username"><strong>Product ID</strong></label><input class="form-control" type="text" value=<?php echo '"' . $productid . '"'; ?> name="product_id" readonly></div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-group"><label for="username"><strong>Product merk</strong></label><input class="form-control" type="text" value=<?php echo '"' . $product['telefoonmerk'] . '"'; ?> name="product_merk"></div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group"><label for="email"><strong>Product naam</strong></label><input class="form-control" type="text" value=<?php echo '"' . $product['product_naam'] . '"'; ?> name="product_naam"></div>
@@ -123,12 +129,19 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="form-group">
+                                        <div class="form-group"><label for="last_name"><strong>Product image</strong></label><input class="form-control" type="text" value=<?php echo '"' . $product['image'] . '"'; ?> name="product_image"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
                                         <label for="exampleFormControlTextarea1"><b>Product description</b></label>
                                         <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"><?php echo $product['description']; ?></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Edit product</button>  <button class="btn btn-secondary btn-sm" onclick="goBack()">Cancel</button></div>
+                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Edit product</button>  <a href="../admin/products.php" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Cancel</a></div>
                         </form>
                     </div>
                 </div>
@@ -140,12 +153,6 @@
             </div>
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
-
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
