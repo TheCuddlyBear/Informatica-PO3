@@ -106,7 +106,7 @@
 
 <!-- Progress Bar -->
 <?php
-    $id = $_GET['id'];
+    $id = str_replace('#','',$_GET['id']);
 
     if(!empty($id)){
     $sql = "SELECT * FROM trackentrace WHERE order_id = " . $id;  
