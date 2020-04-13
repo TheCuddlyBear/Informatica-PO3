@@ -166,6 +166,7 @@ if(!empty($error)){
                                 $query = "SELECT * FROM bestelregel WHERE order_id = $orderid";
                                 $result = $conn->query($query);
                                 $regel = 0;
+                                $prijs = 0;
                                 $totaleprijs = 0;
                                 $totaalaantal = 0;
 
@@ -265,9 +266,7 @@ if(!empty($error)){
                                     <div class="col">
                                         <label for="first_name"><strong>Betaalmethode</strong></label>
                                         <select disabled class='form-control form-control-lg mb-3' name="betaalmethode">
-                                            <option>Paypal</option>
-                                            <option>IDEAL</option>
-                                            <option>Creditcard</option>
+                                            <option><?php echo $arrayEmail['betaalmethode']; ?></option>
                                         </select>
                                     </div>
                                 </div>

@@ -27,7 +27,7 @@ $resultOTW = mysqli_query($conn, $otwOrderQuery);
 $otwOrders = mysqli_num_rows($resultOTW);
 
 // Earnings monthly
-$monthToday = date('m');
+$monthToday = '-' . date('m') . '-';
 
 $monthQuery = "SELECT * FROM bestelling WHERE datum LIKE '%$monthToday%'";
 $resultMonth = mysqli_query($conn, $monthQuery);
@@ -47,4 +47,5 @@ $yearEarnings = 0;
 while($row = $resultYear->fetch_assoc()){
     $yearEarnings = $yearEarnings + $row['totalprice'];
 }
+
 ?>

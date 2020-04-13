@@ -74,43 +74,12 @@
             </div>
             </nav>
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Profile of <?php echo $_SESSION['fullname'] ?></h3>
+                <h3 class="text-dark mb-4">Profile</h3>
                 <div class="row mb-3">
                     <div class="col-lg-4">
                         <div class="card mb-3">
                             <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src=<?php echo "'" . $_SESSION['avatar'] . "'" ?> width="160" height="160">
-                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card shadow mb-3">
-                                    <div class="card-header py-3">
-                                        <p class="text-primary m-0 font-weight-bold">User Settings</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" placeholder="user.name" name="username"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" placeholder="user@example.com" name="email"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" placeholder="John" name="first_name"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" placeholder="Doe" name="last_name"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
-                                        </form>
-                                    </div>
-                                </div>
-                                
+                                <h4 class="text-dark"><?php echo $_SESSION['fullname'] ?></h4>
                             </div>
                         </div>
                     </div>
